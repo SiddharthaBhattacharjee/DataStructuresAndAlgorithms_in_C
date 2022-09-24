@@ -11,9 +11,8 @@ typedef struct Node node;
 int len=0;
 
 //base address or starting point of linked list
-node ** start = NULL;
 
-node* getNode(int data){
+node* getNode(node** start,int data){
     node* newnode = (node*) malloc (sizeof(node));
     newnode->data = data;
     newnode->next = NULL;
@@ -21,11 +20,11 @@ node* getNode(int data){
 }
 
 // To initialise or create a linked list for a given n no. of data 
-void createLinkedList(int n,int arr[]){
+void createLinkedList(node** start,int n,int arr[]){
     int i;
     node *newnode, *temp;
     while(--n){
-        newnode = getNode(arr[i]);
+        newnode = getNode(start,arr[i]);
         if(*start == NULL) *start = newnode;
         else{
             temp = *start;
@@ -39,9 +38,9 @@ void createLinkedList(int n,int arr[]){
 }
 
 // To insert a node to the start of the linked list
-void insertStart(int data){
+void insertStart(node** start,int data){
     node *newnode;
-    newnode = getNode(data);
+    newnode = getNode(start,data);
     if(*start == NULL) *start = newnode;
     else{
         newnode->next = *start;
@@ -52,9 +51,9 @@ void insertStart(int data){
 }
 
 // To insert a node to the end of the Linked list
-void insertEnd(int data){
+void insertEnd(node** start,int data){
     node *newnode, *temp;
-    newnode = getNode(data);
+    newnode = getNode(start,data);
     if(*start == NULL) *start = newnode;
     else{
         temp = *start;
@@ -67,13 +66,13 @@ void insertEnd(int data){
 }
 
 // To insert a node to a given index position
-void insertPos(int data,int pos){
+void insertPos(node** start,int data,int pos){
     if(pos>len){
         printf("Index out of bound");
     }
     else{
         node* temp = *start;
-        node* newnode = getNode(data);
+        node* newnode = getNode(start,data);
         for(int i=0;i<pos;i++){
             temp = temp->next;
         }
@@ -84,8 +83,8 @@ void insertPos(int data,int pos){
 }
 
 // To insert a node in a sorted Linked list in appropriate position
-void insertSorted(int data){
-    node* newnode = getNode(data);
+void insertSorted(node** start,int data){
+    node* newnode = getNode(start,data);
     node* temp = *start;
     if(*start == NULL) *start = newnode;
     else{
@@ -99,7 +98,7 @@ void insertSorted(int data){
 }
 
 //deletes the 1st occurence of the element from linked list
-void deleteByElement(int data){
+void deleteByElement(node** start,int data){
     node* temp = *start;
     node* temp2 = temp->next;
     while(temp2->next != NULL){
@@ -120,7 +119,7 @@ void deleteByElement(int data){
 }
 
 // Deletes the element at the position given
-void deleteByPosition(int pos){
+void deleteByPosition(node** start,int pos){
     if(pos>len){
         printf("Index out of bound!");
         return;
@@ -136,7 +135,7 @@ void deleteByPosition(int pos){
 }
 
 // Searches and returns the position of 1st occurance of an element in the linked list, returns -1 if element is not in linked list
-int search(int data){
+int search(node** start,int data){
     node* temp = *start;
     int pos = 0;
     while(temp){
@@ -150,7 +149,7 @@ int search(int data){
 }
 
 // To display a visual representation of the linked list
-void displayLinkedList(){
+void displayLinkedList(node** start){
     printf("\nStart->");
     node* temp = *start;
     while(temp){
@@ -161,20 +160,21 @@ void displayLinkedList(){
 }
 
 int main(){
+    node ** start = NULL;
     int initial[] = {2,3,4,6,7,9};
-    createLinkedList(6,initial);
-    displayLinkedList();
-    insertStart(1);
-    displayLinkedList();
-    insertEnd(10);
-    displayLinkedList();
-    insertPos(5,4);
-    displayLinkedList();
-    insertSorted(8);
-    displayLinkedList();
-    deleteByElement(3);
-    displayLinkedList();
-    deleteByPosition(1);
-    displayLinkedList();
+    createLinkedList(start,6,initial);
+    displayLinkedList(start);
+    insertStart(start,1);
+    displayLinkedList(start);
+    insertEnd(start,10);
+    displayLinkedList(start);
+    insertPos(start,5,4);
+    displayLinkedList(start);
+    insertSorted(start,8);
+    displayLinkedList(start);
+    deleteByElement(start,3);
+    displayLinkedList(start);
+    deleteByPosition(start,1);
+    displayLinkedList(start);
     return 0;
 }
